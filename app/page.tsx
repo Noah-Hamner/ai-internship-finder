@@ -1,14 +1,32 @@
 "use client";
 
-import { useState } from "react";
-import { jobs } from "@/data/jobs";
+import { useEffect, useState } from "react";
+import type { Job } from "@/types/job";
 
 export default function Home() {
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("ALL");
   const [workType, setWorkType] = useState("ALL");
   const [location, setLocation] = useState ("ANYWHERE_US")
   const [season, setSeason] = useState("ALL");
+  useEffect(() => {
+  async function loadJobs() {
+    const response = await fetch("/api/jobs");
+    const databaseJobs = await response.json();
+
+    const formattedJobs: Job[] = databaseJobs.map(
+      (job: Job & { firstDiscoveredAt: string }) => ({
+        ...job,
+        discoveredAt: job.firstDiscoveredAt,
+      })
+    );
+
+    setJobs(formattedJobs);
+  }
+
+  loadJobs();
+}, []);
   const filteredJobs = jobs.filter((job) => {
     const searchTerm = search.toLowerCase();
     
