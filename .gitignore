@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+desktop.ini
+
+# Local AI discovery test artifacts
+discovered_jobs.json
+test-validation.ts
