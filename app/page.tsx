@@ -10,9 +10,35 @@ export default function Home() {
   const [workType, setWorkType] = useState("ALL");
   const [location, setLocation] = useState ("ANYWHERE_US")
   const [season, setSeason] = useState("ALL");
-  useEffect(() => {
+useEffect(() => {
   async function loadJobs() {
-    const response = await fetch("/api/jobs");
+    const params = new URLSearchParams();
+
+    if (search) {
+      params.set("search", search);
+    }
+
+    if (category !== "ALL") {
+      params.set("category", category);
+    }
+
+    if (workType !== "ALL") {
+      params.set("workType", workType);
+    }
+
+    if (season !== "ALL") {
+      params.set("season", season);
+    }
+
+    if (location === "TEXAS") {
+      params.set("location", "Texas");
+    } else if (location === "REMOTE") {
+      params.set("location", "Remote");
+    } else if (location === "ANYWHERE_US") {
+      params.set("location", "Anywhere US");
+    }
+
+    const response = await fetch(`/api/jobs?${params.toString()}`);
     const databaseJobs = await response.json();
 
     const formattedJobs: Job[] = databaseJobs.map(
@@ -26,36 +52,8 @@ export default function Home() {
   }
 
   loadJobs();
-}, []);
-  const filteredJobs = jobs.filter((job) => {
-    const searchTerm = search.toLowerCase();
-    
-    const matchesSearch =
-      job.title.toLowerCase().includes(searchTerm) ||
-      job.company.toLowerCase().includes(searchTerm) ||
-      job.location.toLowerCase().includes(searchTerm) ||
-      job.skills.some((skill) =>
-        skill.toLowerCase().includes(searchTerm)
-      );
-      
-    const matchesCategory =
-      category === "ALL" || job.category === category;
-    const matchesWorkType =
-      workType === "ALL" || job.workType === workType;
-    const matchesLocation =
-  location === "ANYWHERE_US" ||
-  (location === "TEXAS" && job.location.includes(", TX")) ||
-  (location === "REMOTE" && job.workType === "REMOTE");
-  const matchesSeason = season === "ALL" || job.season === season;
-  
+}, [search, category, workType, location, season]);
 
-    return (matchesSearch 
-      && matchesCategory
-        && matchesWorkType
-         && matchesLocation)
-         && matchesSeason;
-
-});
   return (
     <main className="min-h-screen bg-slate-50">
       <section className="border-b bg-white">
@@ -170,7 +168,7 @@ export default function Home() {
         </h2>
 
 <div className="mt-6 grid gap-4">
-  {filteredJobs.map((job) => (
+  {jobs.map((job) => (
         
     <article
       key={job.id}
