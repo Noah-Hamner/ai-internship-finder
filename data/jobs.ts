@@ -11,6 +11,7 @@ export const jobs: Job[] = [
     season: "SUMMER_2027",
     skills: ["TypeScript", "React", "Node.js"],
     discoveredAt: "2026-09-03",
+    applyUrl: "https://www.google.com/"
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ export const jobs: Job[] = [
     season: "SUMMER_2027",
     skills: ["Python", "Linux", "Networking"],
     discoveredAt: "2026-09-02",
+    applyUrl: "https://www.google.com/"
   },
   {
     id: 3,
@@ -33,5 +35,6 @@ export const jobs: Job[] = [
     season: "FALL_2027",
     skills: ["AWS", "Python", "Cloud Security"],
     discoveredAt: "2026-09-01",
+    applyUrl: "https://www.google.com/"
   },
 ];

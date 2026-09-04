@@ -7,6 +7,8 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("ALL");
   const [workType, setWorkType] = useState("ALL");
+  const [location, setLocation] = useState ("ANYWHERE_US")
+  const [season, setSeason] = useState("ALL");
   const filteredJobs = jobs.filter((job) => {
     const searchTerm = search.toLowerCase();
     
@@ -17,14 +19,23 @@ export default function Home() {
       job.skills.some((skill) =>
         skill.toLowerCase().includes(searchTerm)
       );
-
+      
     const matchesCategory =
       category === "ALL" || job.category === category;
     const matchesWorkType =
       workType === "ALL" || job.workType === workType;
+    const matchesLocation =
+  location === "ANYWHERE_US" ||
+  (location === "TEXAS" && job.location.includes(", TX")) ||
+  (location === "REMOTE" && job.workType === "REMOTE");
+  const matchesSeason = season === "ALL" || job.season === season;
+  
 
-    return matchesSearch && matchesCategory && matchesWorkType;
-
+    return (matchesSearch 
+      && matchesCategory
+        && matchesWorkType
+         && matchesLocation)
+         && matchesSeason;
 
 });
   return (
@@ -90,10 +101,49 @@ export default function Home() {
               <option value="HYBRID">Hybrid</option>
               <option value="ONSITE">On-site</option>
             </select>
+            <div className="mt-4">
+            <label
+              htmlFor="location"
+              className="mb-2 block text-sm font-medium text-slate-700"
+            >
+              Location
+            </label>
+
+            <select
+              id="location"
+              value={location}
+              onChange={(event) => setLocation(event.target.value)}
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500"
+            >
+              <option value="ANYWHERE_US">Anywhere US</option>
+              <option value="TEXAS">Texas</option>
+              <option value="REMOTE">Remote</option>
+            </select>
+            <div className="mt-4">
+  <label
+    htmlFor="season"
+    className="mb-2 block text-sm font-medium text-slate-700"
+  >
+    Season
+  </label>
+
+  <select
+    id="season"
+    value={season}
+    onChange={(event) => setSeason(event.target.value)}
+    className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500"
+  >
+    <option value="ALL">All Seasons</option>
+    <option value="SUMMER_2027">Summer 2027</option>
+    <option value="FALL_2027">Fall 2027</option>
+    <option value="SPRING_2028">Spring 2028</option>
+  </select>
+</div>
+        </div>
           </div>
           </div>
         </div>
-        
+      
       </section>
       
       <section className="mx-auto max-w-6xl px-6 py-10">
@@ -117,9 +167,14 @@ export default function Home() {
           <h3 className="mt-1 text-xl font-semibold text-slate-900">
             {job.title}
           </h3>
-
           <p className="mt-2 text-sm text-slate-600">
             {job.location} · {job.workType}
+          </p>
+
+          <p className="mt-2 text-sm font-medium text-slate-600">
+            {job.category === "SOFTWARE_ENGINEERING"
+              ? "Software Engineering"
+              : "Cybersecurity"}
           </p>
         </div>
 
@@ -127,7 +182,7 @@ export default function Home() {
           {job.season}
         </span>
       </div>
-
+      
       <div className="mt-4 flex flex-wrap gap-2">
         {job.skills.map((skill) => (
           <span
@@ -139,10 +194,20 @@ export default function Home() {
         ))}
       </div>
 
-      <p className="mt-4 text-xs text-slate-500">
-        Discovered {job.discoveredAt}
-      </p>
-    </article>
+      <div className="mt-4 flex items-center justify-between">
+        <p className="text-xs text-slate-500">
+          Discovered {job.discoveredAt}
+        </p>
+
+<a
+  href={job.applyUrl}
+  target="_blank"
+  rel="noopener noreferrer"  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+>
+  Apply
+</a>
+      </div>
+          </article>
   ))}
 </div>
       </section>
