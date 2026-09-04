@@ -24,8 +24,8 @@ export const jobs = pgTable("jobs", {
 
   description: text("description"),
   skills: text("skills").array().notNull().default([]),
-
-  applyUrl: text("apply_url").notNull(),
+dedupKey: text("dedup_key").notNull().unique(),
+  applyUrl: text("apply_url").notNull().unique(),
   sourceUrl: text("source_url"),
 
   firstDiscoveredAt: timestamp("first_discovered_at", {

@@ -45,3 +45,4 @@ desktop.ini
 # Local AI discovery test artifacts
 discovered_jobs.json
 test-validation.ts
+test-upsert.ts
