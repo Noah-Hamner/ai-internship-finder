@@ -1,8 +1,7 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import type { Job } from "@/types/job";
-
+import { ThemeToggle } from "@/components/theme-toggle";
 export default function Home() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [search, setSearch] = useState("");
@@ -55,14 +54,18 @@ useEffect(() => {
 }, [search, category, workType, location, season]);
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <section className="border-b bg-white">
+<main className="min-h-screen bg-slate-50 dark:bg-slate-950">
+<section className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
         <div className="mx-auto max-w-6xl px-6 py-16">
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900">
-            Internship Finder
-          </h1>
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+              Internship Finder
+            </h1>
 
-          <p className="mt-3 max-w-2xl text-lg text-slate-600">
+            <ThemeToggle />
+          </div>
+
+          <p className="mt-3 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
             Discover software engineering and cybersecurity internships across
             the United States.
           </p>
@@ -73,13 +76,13 @@ useEffect(() => {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Search by role, company, skill, or location..."
-            className="mt-8 w-full max-w-2xl rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-blue-500"
+            className="mt-8 w-full max-w-2xl rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400"
             
           />
           <div className="mt-4">
             <label
               htmlFor="category"
-              className="mb-2 block text-sm font-medium text-slate-700"
+              className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Role Category
             </label>
@@ -88,7 +91,7 @@ useEffect(() => {
               id="category"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
-              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
             >
               <option value="ALL">All</option>
               <option value="SOFTWARE_ENGINEERING">
@@ -101,7 +104,7 @@ useEffect(() => {
             <div className="mt-4">
             <label
               htmlFor="workType"
-              className="mb-2 block text-sm font-medium text-slate-700"
+              className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Work Arrangement
             </label>
@@ -110,7 +113,7 @@ useEffect(() => {
               id="workType"
               value={workType}
               onChange={(event) => setWorkType(event.target.value)}
-              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
             >
               <option value="ALL">All</option>
               <option value="REMOTE">Remote</option>
@@ -120,7 +123,7 @@ useEffect(() => {
             <div className="mt-4">
             <label
               htmlFor="location"
-              className="mb-2 block text-sm font-medium text-slate-700"
+              className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
             >
               Location
             </label>
@@ -129,7 +132,7 @@ useEffect(() => {
               id="location"
               value={location}
               onChange={(event) => setLocation(event.target.value)}
-              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500"
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
             >
               <option value="ANYWHERE_US">Anywhere US</option>
               <option value="TEXAS">Texas</option>
@@ -138,7 +141,7 @@ useEffect(() => {
             <div className="mt-4">
   <label
     htmlFor="season"
-    className="mb-2 block text-sm font-medium text-slate-700"
+    className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
   >
     Season
   </label>
@@ -147,7 +150,7 @@ useEffect(() => {
     id="season"
     value={season}
     onChange={(event) => setSeason(event.target.value)}
-    className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500"
+    className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
   >
     <option value="ALL">All Seasons</option>
     <option value="SUMMER_2027">Summer 2027</option>
@@ -163,7 +166,7 @@ useEffect(() => {
       </section>
       
       <section className="mx-auto max-w-6xl px-6 py-10">
-        <h2 className="text-2xl font-semibold text-slate-900">
+        <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
           Internship Opportunities
         </h2>
 
@@ -172,29 +175,29 @@ useEffect(() => {
         
     <article
       key={job.id}
-      className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+      className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-1000 dark:bg-slate-600"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-slate-500">
+          <p className="text-sm font-medium text-slate-900">
             {job.company}
           </p>
 
           <h3 className="mt-1 text-xl font-semibold text-slate-900">
             {job.title}
           </h3>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-sm text-slate-900">
             {job.location} · {job.workType}
           </p>
 
-          <p className="mt-2 text-sm font-medium text-slate-600">
+          <p className="mt-2 text-sm font-medium text-slate-900">
             {job.category === "SOFTWARE_ENGINEERING"
               ? "Software Engineering"
               : "Cybersecurity"}
           </p>
         </div>
 
-        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
           {job.season}
         </span>
       </div>
@@ -211,7 +214,7 @@ useEffect(() => {
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-500 dark:text-slate-400">
           Discovered {job.discoveredAt}
         </p>
 
